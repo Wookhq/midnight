@@ -31,7 +31,7 @@ class ModUpdater:
             mod_info: dict[str, str | int] = json.load(file)
 
         # 💀
-        deploy_history: DeployHistory = DeployHistory()
+        deploy_history: DeployHistory = DeployHistory() #wtf
         mod_file_version: int | None = mod_info.get("fileVersion")  # type: ignore
         if not isinstance(mod_file_version, int):
             mod_guid: str | None = mod_info.get("clientVersionUpload")  # type: ignore
