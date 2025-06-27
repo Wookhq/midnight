@@ -1,1 +1,0 @@
-from .shortcut import Shortcut
