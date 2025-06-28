@@ -13,10 +13,10 @@ from modules.deployments import DeployHistory
 def load_deploy():
     deploy = DeployHistory()
     print(deploy)
-    return deploy.player_deployments[10:]
+    return deploy.player_deployments[-10:]
 
 deploys = load_deploy()
-options = {f"{d.file_version} ({d.guid[:8]})": d for d in deploys}
+options = {f"{d.file_version} ({d.guid})": d for d in deploys}
 
 col1, col2 = st.columns(2)
 
@@ -24,10 +24,10 @@ with col1:
     mod_path = st.text_input("Path to the mod folder", placeholder="e.g : ~/sigmafolder/Blue-star-modz")
 
 with col2:
-    mod_ver_display = st.selectbox("Mods version", options=list(options.keys()))
+    mod_ver_display = st.selectbox("Mod version", options=list(options.keys()))
     mod_ver = options[mod_ver_display]
 
-    if st.button("Patch"):
+    if st.button("Update"):
         print("sigma! its do nothing!")
 
 
