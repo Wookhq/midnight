@@ -1,4 +1,5 @@
 import streamlit as st
+import requests
 from modules.sidebar.sidebar import InitSidebar
 
 InitSidebar()
@@ -52,17 +53,23 @@ with col2:
     selected = values[labels.index(mod_ver_display)]
 
     if selected is obj:
-        mod_ver = "do sum"  # custom logic i think
+        # https://raw.githubusercontent.com/Wookhq/midnight/refs/heads/main/fetch/sobercp.txt
+        sober = requests.get("https://raw.githubusercontent.com/Wookhq/midnight/refs/heads/main/fetch/sobercp.txt")  
+        mod_ver = sober.text   
     else:
         mod_ver = selected  
 
     if st.button("Update"):
+        UpdateMod(mod_path, mod_ver)
+
+        # dezug stuff
+
         # if isinstance(mod_ver, str):
         #     st.write("Selected version:", mod_ver)
         # else:
         #     st.write("Selected version:", mod_ver.file_version)
         #     st.write("GUID:", mod_ver.guid)
         #     st.write("Binary Type:", mod_ver.binary_type)
-        UpdateMod()
+        
 
 
