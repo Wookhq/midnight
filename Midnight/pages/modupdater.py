@@ -32,11 +32,13 @@ with col2:
     selected = values[labels.index(mod_ver_display)]
 
     if selected is obj:
-        mod_ver = "do sum"
+        mod_ver = "do sum"  # custom logic i think
     else:
-        mod_ver = selected.file_version
+        mod_ver = selected  
 
     if st.button("Update"):
         print("sigma! its do nothing!")
+        print("Selected version:", mod_ver)
+        print("Mod path:", mod_path)
 
 
