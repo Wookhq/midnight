@@ -9,6 +9,26 @@ from modules.deployments import DeployHistory
 
 # this shit gonna be hard
 
+
+def UpdateMod(modpath: Path, version, ForceOverWrite : False):
+    history = DeployHistory()
+    target_version = next(
+        (v for v in reversed(history.studio_deployments) if v.file_version.minor == version),
+        None
+    )
+    if not target_version:
+        raise Exception(f"Version {version} not found")
+    if ModUpdater.check_for_updates(modpath, target_version):  # fixed here
+        print(f"Updating {modpath} to version {version}...")
+        ModUpdater.update_mod(modpath, target_version)
+        print("Update completed ✅")
+    else:
+        print("Mod is already up-to-date ❎")
+
+
+
+
+
 @st.cache_data
 def load_deploy():
     deploy = DeployHistory()
@@ -37,8 +57,12 @@ with col2:
         mod_ver = selected  
 
     if st.button("Update"):
-        print("sigma! its do nothing!")
-        print("Selected version:", mod_ver)
-        print("Mod path:", mod_path)
+        # if isinstance(mod_ver, str):
+        #     st.write("Selected version:", mod_ver)
+        # else:
+        #     st.write("Selected version:", mod_ver.file_version)
+        #     st.write("GUID:", mod_ver.guid)
+        #     st.write("Binary Type:", mod_ver.binary_type)
+        UpdateMod()
 
 
