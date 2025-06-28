@@ -11,7 +11,8 @@ from modules.deployments import DeployHistory
 # this shit gonna be hard
 
 
-def UpdateMod(modpath: Path, version, ForceOverWrite : False):
+def UpdateMod(modpath, version, ForceOverWrite: bool = False):
+    modpath = Path(modpath)
     history = DeployHistory()
     target_version = next(
         (v for v in reversed(history.studio_deployments) if v.file_version.minor == version),
@@ -21,7 +22,10 @@ def UpdateMod(modpath: Path, version, ForceOverWrite : False):
         raise Exception(f"Version {version} not found")
     if ModUpdater.check_for_updates(modpath, target_version):  # fixed here
         print(f"Updating {modpath} to version {version}...")
-        ModUpdater.update_mod(modpath, target_version)
+        try:
+            ModUpdater.update_mod(modpath, target_version)
+        except FileNotFoundError as e:
+            print(f"your code is ass : {e}")
         print("Update completed ✅")
     else:
         print("Mod is already up-to-date ❎")
@@ -60,7 +64,7 @@ with col2:
         mod_ver = selected  
 
     if st.button("Update"):
-        UpdateMod(mod_path, mod_ver)
+        UpdateMod(mod_path, mod_ver.file_version.minor if not isinstance(mod_ver, str) else mod_ver)
 
         # dezug stuff
 
